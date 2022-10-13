@@ -15,6 +15,7 @@ class Task(Enum):
     Task10 = 10
 
 class StudentType(Enum):
+    UNKNOWN = -1
     BA = 0
     MA = 1
 
@@ -51,6 +52,10 @@ class Student:
 
     def __repr__(self):
         return str(self)
+
+    @staticmethod
+    def filterForStudentOfType(students : list, studentType : StudentType):
+        return [student for student in students if student.studentType == studentType]
 
 
 class StudentGroup:
@@ -123,7 +128,13 @@ class SurveyParser:
                     votings.append(Voting(Task.Task8, int(row[8])))
                     votings.append(Voting(Task.Task9, int(row[9])))
                     votings.append(Voting(Task.Task10, int(row[10])))
-                    studentType = row[11]
+                    if int(row[11]) == 0:
+                        studentType = StudentType.BA
+                    elif int(row[11]) == 1:
+                        studentType = StudentType.MA
+                    else: 
+                        studentType = StudentType.UNKNOWN
+
                     student = Student(votings, studentType, name)
                     logging.debug(student)
                     logging.debug(student.votings)
@@ -135,7 +146,11 @@ if __name__ == '__main__':
     logging.basicConfig(filename='logging.log', level=logging.DEBUG)
     students = SurveyParser().parseCSV('testdata.dat')
 
-    TaskDispatcher(students).dispatch()
+    baStudents = Student.filterForStudentOfType(students, StudentType.BA)
+    maStudents = Student.filterForStudentOfType(students, StudentType.MA)
+
+    TaskDispatcher(baStudents).dispatch()
+    TaskDispatcher(maStudents).dispatch()
 
 
 
