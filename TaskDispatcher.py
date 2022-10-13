@@ -78,6 +78,7 @@ class TaskDispatcher:
         for task in Task:
             actualVoting = sum([student.votingForTask(task) for student in students])
             if(actualVoting > bestVoting):
+                logging.debug("task:" + str(task) + " actual voting:" + str(actualVoting))
                 bestVotedTask = task
                 bestVoting = actualVoting
 
@@ -144,7 +145,7 @@ class SurveyParser:
 
 if __name__ == '__main__':
     logging.basicConfig(filename='logging.log', level=logging.DEBUG)
-    students = SurveyParser().parseCSV('testdata.dat')
+    students = SurveyParser().parseCSV('test/testdata2.dat')
 
     baStudents = Student.filterForStudentOfType(students, StudentType.BA)
     maStudents = Student.filterForStudentOfType(students, StudentType.MA)
