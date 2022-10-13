@@ -86,7 +86,7 @@ class TaskDispatcher:
     def dispatch(self):
         groups = []
         while len(self.students) > 2:    
-            task = self.getBestVotedTask(students)
+            task = self.getBestVotedTask(self.students)
             #TODO Replace by function call with argument
             for student in self.students:
                 student.votingForSorting = student.votingForTask(task)
