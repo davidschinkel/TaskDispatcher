@@ -1,4 +1,5 @@
 from enum import Enum
+import logging
 import csv
 
 class Task(Enum):
@@ -21,6 +22,12 @@ class Voting:
     def __init__(self, task : Task, value : int):
         self.task = task   
         self.value = value
+
+    def __str__(self):
+        return "task " + str(self.task) + " voting " + str(self.value)
+
+    def __repr__(self):
+        return str(self)
 
 class Student:
 
@@ -117,11 +124,15 @@ class SurveyParser:
                     votings.append(Voting(Task.Task9, int(row[9])))
                     votings.append(Voting(Task.Task10, int(row[10])))
                     studentType = row[11]
+                    student = Student(votings, studentType, name)
+                    logging.debug(student)
+                    logging.debug(student.votings)
                     students.append(Student(votings, studentType, name))
         return students
 
 
 if __name__ == '__main__':
+    logging.basicConfig(filename='logging.log', level=logging.DEBUG)
     students = SurveyParser().parseCSV('testdata.dat')
 
     TaskDispatcher(students).dispatch()
