@@ -109,9 +109,9 @@ class SurveyParser:
     def parseCSV(self, path : str):
         students=[]
         with open(path) as csvfile:
-            votings = []
             spamreader = csv.reader(csvfile, delimiter=',')
             for row in spamreader:
+                    votings = []
                     name = row[0]
                     votings.append(Voting(Task.Task1, int(row[1])))
                     votings.append(Voting(Task.Task2, int(row[2])))
