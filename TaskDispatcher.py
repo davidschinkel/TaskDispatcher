@@ -1,6 +1,7 @@
 from enum import Enum
 import logging
 import csv
+import argparse
 
 class Task(Enum):
     Task1 = 1
@@ -125,7 +126,7 @@ class SurveyParser:
                         studentType = StudentType.MA
                     else: 
                         studentType = StudentType.UNKNOWN
-                        
+
                     votings.append(Voting(Task.Task1, int(row[2])))
                     votings.append(Voting(Task.Task2, int(row[3])))
                     votings.append(Voting(Task.Task3, int(row[4])))
@@ -145,8 +146,14 @@ class SurveyParser:
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='A tiny code to group students to assignments')
+    parser.add_argument('path', metavar='path', type=str,
+                    help='Path to file containing the votings')
+
+    args = parser.parse_args()
+
     logging.basicConfig(filename='logging.log', level=logging.DEBUG)
-    students = SurveyParser().parseCSV('test/testdata3.dat')
+    students = SurveyParser().parseCSV(args.path)
 
     baStudents = Student.filterForStudentOfType(students, StudentType.BA)
     maStudents = Student.filterForStudentOfType(students, StudentType.MA)
