@@ -99,17 +99,18 @@ class TaskDispatcher:
             self.students.remove(sortedStudents[1])
             self.students.remove(sortedStudents[2])
 
-        self.logGroups(groups)
-        self.logOrphans()
+        return [groups, self.students]
 
-    def logGroups(self, groups):
+    @staticmethod
+    def printGroups(groups):
         for group in groups:
             print(group)
 
-    def logOrphans(self):
-        if len(self.students) > 0:
+    @staticmethod
+    def printOrphans(students):
+        if len(students) > 0:
             print("Students without task")
-            print(self.students)
+            print(students)
 
 class SurveyParser:
 
@@ -158,8 +159,15 @@ if __name__ == '__main__':
     baStudents = Student.filterForStudentOfType(students, StudentType.BA)
     maStudents = Student.filterForStudentOfType(students, StudentType.MA)
 
-    TaskDispatcher(baStudents).dispatch()
-    TaskDispatcher(maStudents).dispatch()
+    [baGroups, baOrphans] = TaskDispatcher(baStudents).dispatch()
+    [maGroups, maOrphans] = TaskDispatcher(maStudents).dispatch()
+
+    #Printing of the results
+    TaskDispatcher.printGroups(baGroups)
+    TaskDispatcher.printOrphans(baOrphans)
+
+    TaskDispatcher.printGroups(maGroups)
+    TaskDispatcher.printOrphans(maOrphans)
 
 
 
