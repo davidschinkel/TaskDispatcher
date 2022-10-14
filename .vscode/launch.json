@@ -5,12 +5,30 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "testdata1",
+            "type": "python",
+            "request": "launch",
+            "program": "TaskDispatcher.py",
+            "console": "integratedTerminal",
+            "args": ["test\/testdata1.dat"],
+            "justMyCode": true
+        },
+        {
             "name": "testdata2",
             "type": "python",
             "request": "launch",
             "program": "TaskDispatcher.py",
             "console": "integratedTerminal",
             "args": ["test\/testdata2.dat"],
+            "justMyCode": true
+        },
+        {
+            "name": "testdata3",
+            "type": "python",
+            "request": "launch",
+            "program": "TaskDispatcher.py",
+            "console": "integratedTerminal",
+            "args": ["test\/testdata3.dat"],
             "justMyCode": true
         }
     ]
