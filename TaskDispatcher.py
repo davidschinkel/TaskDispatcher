@@ -145,7 +145,7 @@ class SurveyParser:
 
 if __name__ == '__main__':
     logging.basicConfig(filename='logging.log', level=logging.DEBUG)
-    students = SurveyParser().parseCSV('test/testdata2.dat')
+    students = SurveyParser().parseCSV('test/testdata3.dat')
 
     baStudents = Student.filterForStudentOfType(students, StudentType.BA)
     maStudents = Student.filterForStudentOfType(students, StudentType.MA)
