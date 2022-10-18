@@ -10,7 +10,7 @@ class testFullRun(unittest.TestCase):
         assert(group.students[1].name == studentNames[1])
         assert(group.students[2].name == studentNames[2])
 
-    def testTestdata1(self):
+    def testTestdata1_reverseSorting_True(self):
         students = SurveyParser().parseCSV("test/testdata1.dat")
 
         baStudents = Student.filterForStudentOfType(students, StudentType.BA)
@@ -34,3 +34,28 @@ class testFullRun(unittest.TestCase):
 
         assert(len(maOrphans) == 1)
         assert(maOrphans[0].name == "Student14")
+
+    def testTestdata1_reverseSorting_False(self):
+        students = SurveyParser().parseCSV("test/testdata1.dat")
+
+        baStudents = Student.filterForStudentOfType(students, StudentType.BA)
+        maStudents = Student.filterForStudentOfType(students, StudentType.MA)
+
+        [baGroups, baOrphans] = TaskDispatcher(baStudents, sortingReverse=False).dispatch()
+        [maGroups, maOrphans] = TaskDispatcher(maStudents, sortingReverse=False).dispatch()
+
+        assert(len(baGroups) == 3)
+        testFullRun.assertTaskAndStudentsInGroup(baGroups[0], ["Student5", "Student7", "Student10"], Task.Task7)
+        testFullRun.assertTaskAndStudentsInGroup(baGroups[1], ["Student3", "Student6", "Student8"], Task.Task6)
+        testFullRun.assertTaskAndStudentsInGroup(baGroups[2], ["Student2", "Student4", "Student9"], Task.Task2)
+
+        assert(len(baOrphans) == 1)
+        assert(baOrphans[0].name == "Student1")
+
+        assert(len(maGroups) == 3)
+        testFullRun.assertTaskAndStudentsInGroup(maGroups[0], ["Student15", "Student19", "Student13"], Task.Task5)
+        testFullRun.assertTaskAndStudentsInGroup(maGroups[1], ["Student11", "Student12", "Student14"], Task.Task9)
+        testFullRun.assertTaskAndStudentsInGroup(maGroups[2], ["Student18", "Student17", "Student20"], Task.Task7)
+
+        assert(len(maOrphans) == 1)
+        assert(maOrphans[0].name == "Student16")
