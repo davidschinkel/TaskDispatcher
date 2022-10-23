@@ -1,5 +1,8 @@
-from TaskDispatcher import *
+from taskDispatcher import *
+from student import *
+
 import unittest
+import surveyParser
 
 class testFullRun(unittest.TestCase):
 
@@ -11,13 +14,13 @@ class testFullRun(unittest.TestCase):
         assert(group.students[2].name == studentNames[2])
 
     def testTestdata1_reverseSorting_True(self):
-        students = SurveyParser().parseCSV("test/testdata1.dat")
+        students = surveyParser.SurveyParser().parseCSV("test/testdata1.dat")
 
         baStudents = Student.filterForStudentOfType(students, StudentType.BA)
         maStudents = Student.filterForStudentOfType(students, StudentType.MA)
 
-        [baGroups, baOrphans] = TaskDispatcher(baStudents).dispatch()
-        [maGroups, maOrphans] = TaskDispatcher(maStudents).dispatch()
+        [baGroups, baOrphans] = Dispatcher(baStudents).dispatch()
+        [maGroups, maOrphans] = Dispatcher(maStudents).dispatch()
 
         assert(len(baGroups) == 3)
         testFullRun.assertTaskAndStudentsInGroup(baGroups[0], ["Student5", "Student8", "Student1"], Task.Task4)
@@ -36,13 +39,13 @@ class testFullRun(unittest.TestCase):
         assert(maOrphans[0].name == "Student14")
 
     def testTestdata1_reverseSorting_False(self):
-        students = SurveyParser().parseCSV("test/testdata1.dat")
+        students = surveyParser.SurveyParser().parseCSV("test/testdata1.dat")
 
         baStudents = Student.filterForStudentOfType(students, StudentType.BA)
         maStudents = Student.filterForStudentOfType(students, StudentType.MA)
 
-        [baGroups, baOrphans] = TaskDispatcher(baStudents, sortingReverse=False).dispatch()
-        [maGroups, maOrphans] = TaskDispatcher(maStudents, sortingReverse=False).dispatch()
+        [baGroups, baOrphans] = Dispatcher(baStudents, sortingReverse=False).dispatch()
+        [maGroups, maOrphans] = Dispatcher(maStudents, sortingReverse=False).dispatch()
 
         assert(len(baGroups) == 3)
         testFullRun.assertTaskAndStudentsInGroup(baGroups[0], ["Student5", "Student7", "Student10"], Task.Task7)
