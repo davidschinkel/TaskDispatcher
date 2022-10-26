@@ -7,4 +7,4 @@ class StudentGroup:
         self.task = task
 
     def __str__(self):
-        return "Task" + str(self.task) + " Students:" + str(self.students)
+        return "Task " + str(self.task) + " Students:" + str(self.students)

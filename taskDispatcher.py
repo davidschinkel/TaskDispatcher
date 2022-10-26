@@ -16,11 +16,11 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     logging.basicConfig(filename='logging.log', level=logging.DEBUG)
-    [students, studentTypes] = SurveyParser().parseCSV(args.path)
+    [students, studentTypes, tasks] = SurveyParser().parseCSV(args.path)
 
     for studentType in studentTypes:
         studentsOfType = Student.filterForStudentOfType(students, studentType)
-        [groups, orphans] = Dispatcher(studentsOfType, args.sortingReverse).dispatch()
+        [groups, orphans] = Dispatcher(studentsOfType, tasks, args.sortingReverse).dispatch()
         print("Students of type " + studentType.description)
         Dispatcher.printGroups(groups)
         Dispatcher.printOrphans(orphans)
