@@ -1,10 +1,6 @@
 from enum import Enum
 from voting import *
-
-class StudentType(Enum):
-    UNKNOWN = -1
-    BA = 0
-    MA = 1
+from studentType import *
 
 class Student:
 

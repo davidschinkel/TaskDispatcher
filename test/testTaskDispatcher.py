@@ -14,10 +14,10 @@ class testFullRun(unittest.TestCase):
         assert(group.students[2].name == studentNames[2])
 
     def testTestdata1_reverseSorting_True(self):
-        students = surveyParser.SurveyParser().parseCSV("test/testdata1.dat")
+        [students, studentTypes] = surveyParser.SurveyParser().parseCSV("test/testdata1.dat")
 
-        baStudents = Student.filterForStudentOfType(students, StudentType.BA)
-        maStudents = Student.filterForStudentOfType(students, StudentType.MA)
+        baStudents = Student.filterForStudentOfType(students, StudentType('BA'))
+        maStudents = Student.filterForStudentOfType(students, StudentType('MA'))
 
         [baGroups, baOrphans] = Dispatcher(baStudents).dispatch()
         [maGroups, maOrphans] = Dispatcher(maStudents).dispatch()
@@ -39,10 +39,10 @@ class testFullRun(unittest.TestCase):
         assert(maOrphans[0].name == "Student14")
 
     def testTestdata1_reverseSorting_False(self):
-        students = surveyParser.SurveyParser().parseCSV("test/testdata1.dat")
+        [students, studentTypes] = surveyParser.SurveyParser().parseCSV("test/testdata1.dat")
 
-        baStudents = Student.filterForStudentOfType(students, StudentType.BA)
-        maStudents = Student.filterForStudentOfType(students, StudentType.MA)
+        baStudents = Student.filterForStudentOfType(students, StudentType('BA'))
+        maStudents = Student.filterForStudentOfType(students, StudentType('MA'))
 
         [baGroups, baOrphans] = Dispatcher(baStudents, sortingReverse=False).dispatch()
         [maGroups, maOrphans] = Dispatcher(maStudents, sortingReverse=False).dispatch()

@@ -2,22 +2,19 @@ import csv
 import logging
 from voting import *
 from student import *
+from studentType import *
 
 class SurveyParser:
 
     def parseCSV(self, path : str):
         students=[]
+        studentTypes=set()
         with open(path) as csvfile:
             spamreader = csv.reader(csvfile, delimiter=',')
             for row in spamreader:
                     votings = []
                     name = row[0]
-                    if int(row[1]) == 0:
-                        studentType = StudentType.BA
-                    elif int(row[1]) == 1:
-                        studentType = StudentType.MA
-                    else: 
-                        studentType = StudentType.UNKNOWN
+                    studentType = StudentType(row[1])
 
                     votings.append(Voting(Task.Task1, int(row[2])))
                     votings.append(Voting(Task.Task2, int(row[3])))
@@ -34,4 +31,5 @@ class SurveyParser:
                     logging.debug(student)
                     logging.debug(student.votings)
                     students.append(Student(votings, studentType, name))
-        return students
+                    studentTypes.add(studentType)
+        return [students, studentTypes]
